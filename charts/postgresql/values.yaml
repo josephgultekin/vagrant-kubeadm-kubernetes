@@ -3,7 +3,7 @@ image:
   tag: 16.1
   pullPolicy: IfNotPresent
 
-postgresqlPassword: "L3tme1n+*"
+postgresqlPassword: ""
 postgresqlUser: "postgres"
 postgresqlDatabase: "lab01db"
 

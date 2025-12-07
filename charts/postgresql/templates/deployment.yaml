@@ -22,7 +22,10 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_PASSWORD
-              value: {{ .Values.postgresqlPassword | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secret
+                  key: postgresql-password
             - name: POSTGRES_USER
               value: {{ .Values.postgresqlUser | quote }}
             - name: POSTGRES_DB
