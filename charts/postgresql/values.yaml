@@ -20,5 +20,6 @@ resources:
     cpu: 500m
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 5432
+  nodePort: 30432

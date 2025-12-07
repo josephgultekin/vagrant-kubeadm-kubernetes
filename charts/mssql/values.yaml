@@ -3,7 +3,7 @@ image:
   tag: 2019-latest
   pullPolicy: IfNotPresent
 
-saPassword: "L3tme1n+*"
+saPassword: ""
 
 persistence:
   enabled: true
