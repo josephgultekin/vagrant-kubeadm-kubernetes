@@ -1,3 +1,5 @@
+imagePullSecrets:
+  - name: ghcr-secret
 image:
   repository: ghcr.io/josephgultekin/springboot-app
   tag: latest
