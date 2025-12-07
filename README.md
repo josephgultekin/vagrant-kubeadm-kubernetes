@@ -1,3 +1,115 @@
+## Building and Pushing Images to GitHub Container Registry (ghcr.io)
+
+### 1. Authenticate Docker to ghcr.io
+Generate a GitHub Personal Access Token (PAT) with `write:packages` and `read:packages` scopes.
+
+```sh
+echo <YOUR_GITHUB_PAT> | docker login ghcr.io -u <your-github-username> --password-stdin
+```
+
+### 2. Build your image (FastAPI or Spring Boot)
+For FastAPI:
+```sh
+docker build -t ghcr.io/<your-github-username>/fastapi-app:latest ./app
+```
+For Spring Boot:
+```sh
+docker build -t ghcr.io/<your-github-username>/springboot-app:latest ./app-springboot
+```
+
+### 3. Push your image
+```sh
+docker push ghcr.io/<your-github-username>/fastapi-app:latest
+docker push ghcr.io/<your-github-username>/springboot-app:latest
+```
+
+### 4. Update your Helm values.yaml
+Set the `image.repository` and `image.tag` fields in the relevant chart's `values.yaml`:
+```yaml
+image:
+  repository: ghcr.io/<your-github-username>/fastapi-app
+  tag: latest
+```
+
+Repeat for Spring Boot as needed.
+# vagrant-kubeadm-kubernetes
+
+A local Kubernetes cluster setup using Vagrant and kubeadm, with automated deployment of PostgreSQL, FastAPI, and Spring Boot applications using ArgoCD and Helm.
+
+## Features
+- Vagrant-based multi-node Kubernetes cluster
+- PostgreSQL database deployed via Helm
+- FastAPI Python app with PostgreSQL backend
+- Spring Boot app with PostgreSQL backend
+- Secure secret management for database credentials
+- ArgoCD GitOps deployment for all components
+
+## Directory Structure
+```
+.
+├── app/                  # FastAPI app source
+├── app-springboot/       # Spring Boot app source
+├── charts/               # Helm charts for all apps
+├── configs/              # ArgoCD Application manifests, PVs, Secrets
+├── scripts/              # Cluster setup scripts
+├── Vagrantfile           # Vagrant cluster definition
+└── README.md             # This file
+```
+
+## Quick Start
+
+### 1. Start the Cluster
+```sh
+vagrant up
+```
+
+### 2. Install ArgoCD
+```sh
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
+### 3. Deploy PostgreSQL
+```sh
+kubectl apply -f configs/local-postgresql-pv.yaml
+kubectl apply -f configs/argocd-mssql-app.yaml  # Actually PostgreSQL
+```
+
+### 4. Deploy FastAPI App
+- Build and push your Docker image (e.g., to ghcr.io)
+- Update `charts/fastapi-app/values.yaml` with your image
+- Apply ArgoCD manifest:
+```sh
+kubectl apply -f configs/argocd-fastapi-app.yaml
+```
+
+### 5. Deploy Spring Boot App
+- Build your JAR and Docker image
+- Push image to registry and update `charts/springboot-app/values.yaml`
+- Apply secret:
+```sh
+kubectl apply -f configs/springboot-postgres-secret.yaml
+```
+- Apply ArgoCD manifest:
+```sh
+kubectl apply -f configs/argocd-springboot-app.yaml
+```
+
+## Accessing Services
+- Use `kubectl port-forward` or NodePort to access FastAPI/Spring Boot from your host.
+- Default DB credentials are managed via Kubernetes Secrets.
+
+## Security
+- Database passwords are never stored in Git. Use Kubernetes Secrets for all sensitive data.
+- For private images, create an `imagePullSecret` as documented in the chart.
+
+## Notes
+- Make sure to update image repositories/tags in Helm values before deploying.
+- For troubleshooting, check pod logs and ArgoCD UI.
+
+---
+
+MIT License
 
 # Vagrantfile and Scripts to Automate Kubernetes Setup using Kubeadm [Practice Environment for CKA/CKAD and CKS Exams]
 
