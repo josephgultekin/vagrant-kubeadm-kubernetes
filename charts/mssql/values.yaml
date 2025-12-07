@@ -1,0 +1,23 @@
+image:
+  repository: mcr.microsoft.com/mssql/server
+  tag: 2019-latest
+  pullPolicy: IfNotPresent
+
+saPassword: "L3tme1n+*"
+
+persistence:
+  enabled: true
+  size: 8Gi
+  storageClass: ""
+
+resources:
+  requests:
+    memory: 2Gi
+    cpu: 500m
+  limits:
+    memory: 4Gi
+    cpu: 1000m
+
+service:
+  type: ClusterIP
+  port: 1433
