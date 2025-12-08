@@ -14,6 +14,16 @@ spec:
       labels:
         app: postgresql
     spec:
+      initContainers:
+        - name: copy-hba-config
+          image: busybox
+          command: ["sh", "-c", "cp /tmp/pg_hba.conf /var/lib/postgresql/data/pg_hba.conf && chown 999:999 /var/lib/postgresql/data/pg_hba.conf"]
+          volumeMounts:
+            - name: postgresql-data
+              mountPath: /var/lib/postgresql/data
+            - name: hba-config
+              mountPath: /tmp/pg_hba.conf
+              subPath: pg_hba.conf
       containers:
         - name: postgresql
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -40,9 +50,7 @@ spec:
           volumeMounts:
             - name: postgresql-data
               mountPath: /var/lib/postgresql/data
-            - name: hba-config
-              mountPath: /var/lib/postgresql/data/pg_hba.conf
-              subPath: pg_hba.conf
+            # Remove direct mount of hba-config to data dir
       volumes:
         - name: postgresql-data
           persistentVolumeClaim:
