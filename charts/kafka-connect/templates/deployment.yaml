@@ -20,6 +20,13 @@ spec:
           ports:
             - containerPort: 8083
           resources: {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: CONFIG_STORAGE_TOPIC
+              value: "connect-configs"
+            - name: OFFSET_STORAGE_TOPIC
+              value: "connect-offsets"
+            - name: STATUS_STORAGE_TOPIC
+              value: "connect-status"
 ---
 apiVersion: v1
 kind: Service
