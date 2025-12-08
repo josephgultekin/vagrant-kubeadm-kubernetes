@@ -15,3 +15,4 @@ kafka:
   controllerQuorumVoters: "1@localhost:9093"
   listeners: "PLAINTEXT://:9092,CONTROLLER://:9093"
   advertisedListeners: "PLAINTEXT://kafka.lab01-data.svc.cluster.local:9092"
+  listenerSecurityProtocolMap: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT"

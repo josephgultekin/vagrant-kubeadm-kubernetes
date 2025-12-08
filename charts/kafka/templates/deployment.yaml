@@ -31,6 +31,8 @@ spec:
               value: "{{ .Values.kafka.listeners }}"
             - name: KAFKA_ADVERTISED_LISTENERS
               value: "{{ .Values.kafka.advertisedListeners }}"
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "{{ .Values.kafka.listenerSecurityProtocolMap }}"
 ---
 apiVersion: v1
 kind: Service
