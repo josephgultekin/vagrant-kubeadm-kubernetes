@@ -33,6 +33,14 @@ spec:
               value: "{{ .Values.kafka.advertisedListeners }}"
             - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
               value: "{{ .Values.kafka.listenerSecurityProtocolMap }}"
+            - name: KAFKA_CONTROLLER_LISTENER_NAMES
+              value: "CONTROLLER"
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_TRANSACTION_STATE_LOG_MIN_ISR
+              value: "1"
 ---
 apiVersion: v1
 kind: Service
