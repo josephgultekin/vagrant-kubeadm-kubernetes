@@ -7,3 +7,7 @@ service:
   type: ClusterIP
   port: 9092
 resources: {}
+
+# Kafka configuration
+zookeeper:
+  connect: "zookeeper.lab01-data.svc.cluster.local:2181"

@@ -20,6 +20,9 @@ spec:
           ports:
             - containerPort: 9092
           resources: {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: ZOOKEEPER_CONNECT
+              value: "{{ .Values.zookeeper.connect }}"
 ---
 apiVersion: v1
 kind: Service
