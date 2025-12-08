@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
-  repository: docker.io/bitnami/kafka
-  tag: 3.6.0
+  repository: docker.io/apache/kafka
+  tag: 3.9.1
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
