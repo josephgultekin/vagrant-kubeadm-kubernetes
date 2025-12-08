@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: bitnami/kafka
+  repository: docker.io/bitnami/kafka
   tag: 3.6.0
   pullPolicy: IfNotPresent
 service:
