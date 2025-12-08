@@ -40,7 +40,13 @@ spec:
           volumeMounts:
             - name: postgresql-data
               mountPath: /var/lib/postgresql/data
+            - name: hba-config
+              mountPath: /var/lib/postgresql/data/pg_hba.conf
+              subPath: pg_hba.conf
       volumes:
         - name: postgresql-data
           persistentVolumeClaim:
             claimName: postgresql-pvc
+        - name: hba-config
+          configMap:
+            name: postgresql-hba-config
